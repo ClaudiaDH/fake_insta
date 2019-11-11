@@ -6,7 +6,7 @@
             //qual ação vai tomar mediante ao que o usuario digitou
             switch ($rotas) {
                 case "posts":
-                    $this->viewPost();
+                    $this->listarPosts();        //viewPost();
                 break;
                 
                 case "formulario-post":
@@ -31,7 +31,9 @@
             //desmembrar as info para poder trabalhar com ela
             $descricao = $_POST['descricao'];
             //dizer qual input quero pegar e as info
+            //pega o nome do arquivo
             $nomeArquivo = $_FILES['img']['name'];
+            //pega o link temp da onde esta localizado a imagem
             $linkTemp = $_FILES['img']['tmp_name'];
             $caminhoSalvar = "views/img/$nomeArquivo";
 
@@ -43,7 +45,24 @@
 
             if($resultado){
                 header('Location:/fake_insta/posts');
+            }else{
+                echo "deu errado !";
             }
+        }
+
+        //pego a lista que recebo do meu model e por meio do controller passar isso
+        //cria o obj to tipo post
+        private function listarPosts(){
+            $post = new Post();
+            $listaPosts = $post->listarPosts();
+            //pego a lista de post e coloco dentro do request chamado post
+            //a view e um arquivo php, que tem acesso a qualquer global
+            //pq na hora que ela chamar a viu, na hora que ela aparecer ela tera acesso as info do request
+            $_REQUEST['posts'] = $listaPosts;
+            //vai fazer meio que um include.
+            //retorna uma view.
+            $this->viewPost();
+            //mesmo que include "views/posts.php";
         }
 
     }

@@ -9,6 +9,7 @@
 
         //garantir que so se conecta no banco quem extender essa classe
         //vai gerar uma conexao
+        //somente os filhos dessa classe podem usar o banco de dados.
         protected function criarConexao(){
             //fazer um newPDO
             //atributo se usa quem cifrao
